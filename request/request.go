@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -54,4 +55,12 @@ func (r *RestAPI) SendAuthRequest(method string, subUrl string, headers map[stri
 		return err.Error(), err
 	}
 	return string(content), err
+}
+
+func EncodeURLValues(urlPath string, values url.Values) string {
+	u := urlPath
+	if len(values) > 0 {
+		u += "?" + values.Encode()
+	}
+	return u
 }

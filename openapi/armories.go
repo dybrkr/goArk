@@ -26,7 +26,7 @@ type ArmoriesResponse interface {
 		model.ArmoryGem | model.ColosseumInfo | []model.Collectible
 }
 
-func SendRequest[T ArmoriesResponse](o *OpenAPI, urlPath string, name string, out *T) error {
+func SendArmoriesRequest[T ArmoriesResponse](o *OpenAPI, urlPath string, name string, out *T) error {
 	header := map[string]string{}
 	header["accept"] = "application/json"
 	header["authorization"] = "bearer " + o.AccessKey
@@ -47,54 +47,54 @@ func SendRequest[T ArmoriesResponse](o *OpenAPI, urlPath string, name string, ou
 
 func (o *OpenAPI) GetProfiles(name string) (model.ArmoryProfile, error) {
 	var resp model.ArmoryProfile
-	err := SendRequest(o, GetProfilesFMT, name, &resp)
+	err := SendArmoriesRequest(o, GetProfilesFMT, name, &resp)
 	return resp, err
 }
 
 func (o *OpenAPI) GetEquipment(name string) ([]model.ArmoryEquipment, error) {
 	var resp []model.ArmoryEquipment
-	err := SendRequest(o, GetEquipmentFMT, name, &resp)
+	err := SendArmoriesRequest(o, GetEquipmentFMT, name, &resp)
 	return resp, err
 }
 
 func (o *OpenAPI) GetAvatars(name string) (model.ArmoryAvatars, error) {
 	var resp model.ArmoryAvatars
-	err := SendRequest(o, GetAvatarFMT, name, &resp)
+	err := SendArmoriesRequest(o, GetAvatarFMT, name, &resp)
 	return resp, err
 }
 
 func (o *OpenAPI) GetCombatSkills(name string) ([]model.ArmorySkill, error) {
 	var resp []model.ArmorySkill
-	err := SendRequest(o, GetCombatSkillFMT, name, &resp)
+	err := SendArmoriesRequest(o, GetCombatSkillFMT, name, &resp)
 	return resp, err
 }
 
 func (o *OpenAPI) GetEngravings(name string) (model.ArmoryEngraving, error) {
 	var resp model.ArmoryEngraving
-	err := SendRequest(o, GetEngravingsFMT, name, &resp)
+	err := SendArmoriesRequest(o, GetEngravingsFMT, name, &resp)
 	return resp, err
 }
 
 func (o *OpenAPI) GetCards(name string) (model.ArmoryCard, error) {
 	var resp model.ArmoryCard
-	err := SendRequest(o, GetCardFMT, name, &resp)
+	err := SendArmoriesRequest(o, GetCardFMT, name, &resp)
 	return resp, err
 }
 
 func (o *OpenAPI) GetGems(name string) (model.ArmoryGem, error) {
 	var resp model.ArmoryGem
-	err := SendRequest(o, GetGemsFMT, name, &resp)
+	err := SendArmoriesRequest(o, GetGemsFMT, name, &resp)
 	return resp, err
 }
 
 func (o *OpenAPI) GetColosseums(name string) (model.ColosseumInfo, error) {
 	var resp model.ColosseumInfo
-	err := SendRequest(o, GetColosseumsFMT, name, &resp)
+	err := SendArmoriesRequest(o, GetColosseumsFMT, name, &resp)
 	return resp, err
 }
 
 func (o *OpenAPI) GetCollectibles(name string) ([]model.Collectible, error) {
 	var resp []model.Collectible
-	err := SendRequest(o, GetCollectiblesFMT, name, &resp)
+	err := SendArmoriesRequest(o, GetCollectiblesFMT, name, &resp)
 	return resp, err
 }

@@ -15,7 +15,7 @@ func main() {
 	fmt.Printf("user => %v\n", userinfo)
 	api := openapi.CreateAPI(EndPoint, userinfo.AccessKey)
 
-	resp, err := api.GetEquipment("aa")
+	resp, err := api.GetGuildRanking("루페온")
 	if err != nil {
 		return
 	}
