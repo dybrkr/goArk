@@ -35,43 +35,43 @@ func (o *OpenAPI) GetProfiles(name string) (model.ArmoryProfile, error) {
 	return p, nil
 }
 
-func (o *OpenAPI) GetEquipment(name string) (model.ArmoryEquipment, error) {
+func (o *OpenAPI) GetEquipment(name string) (model.ArmoryEquipments, error) {
 	header := map[string]string{}
 	header["accept"] = "application/json"
 	header["authorization"] = "bearer " + o.AccessKey
 
-	p := model.ArmoryEquipment{}
+	p := []model.ArmoryEquipment{}
 
 	subUrl := fmt.Sprintf(GetEquipmentFMT, url.QueryEscape(name))
 	resp, err := o.SendAuthRequest(http.MethodGet, subUrl, header, nil)
 	if err != nil {
-		return p, err
+		return nil, err
 	}
 
 	err = json.Unmarshal([]byte(resp), &p)
 	if err != nil {
-		return p, err
+		return nil, err
 	}
 
 	return p, nil
 }
 
-func (o *OpenAPI) GetAvatars(name string) (model.ArmoryAvatar, error) {
+func (o *OpenAPI) GetAvatars(name string) (model.ArmoryAvatars, error) {
 	header := map[string]string{}
 	header["accept"] = "application/json"
 	header["authorization"] = "bearer " + o.AccessKey
 
-	p := model.ArmoryAvatar{}
+	p := []model.ArmoryAvatar{}
 
 	subUrl := fmt.Sprintf(GetAvatarFMT, url.QueryEscape(name))
 	resp, err := o.SendAuthRequest(http.MethodGet, subUrl, header, nil)
 	if err != nil {
-		return p, err
+		return nil, err
 	}
 
 	err = json.Unmarshal([]byte(resp), &p)
 	if err != nil {
-		return p, err
+		return nil, err
 	}
 
 	return p, nil
