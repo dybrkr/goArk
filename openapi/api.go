@@ -21,8 +21,20 @@ func CreateAPI(endPoint string, accessKey string) *OpenAPI {
 }
 
 type APIResponse interface {
-	model.AuctionOption | model.Auction |
-		model.MarketOption | []model.MarketItemStats | model.MarketList
+	// event
+	[]model.Event |
+		// character
+		[]model.CharacterInfo |
+		// auction
+		model.AuctionOption | model.Auction |
+		// market
+		model.MarketOption | []model.MarketItemStats | model.MarketList |
+		// guild
+		[]model.GuildRanking |
+		// armory
+		model.ArmoryProfile | []model.ArmoryEquipment | model.ArmoryAvatars |
+		[]model.ArmorySkill | model.ArmoryEngraving | model.ArmoryCard |
+		model.ArmoryGem | model.ColosseumInfo | []model.Collectible
 }
 
 func SendRequest[T APIResponse](o *OpenAPI, method string, urlPath string, input interface{}, output *T) error {
