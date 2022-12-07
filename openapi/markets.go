@@ -1,44 +1,16 @@
 package openapi
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/dybrkr/goArk/openapi/model"
 	"net/http"
-	"strings"
 )
 
 const (
 	GetMarketOptions = "/markets/options"
 	GetItemStat      = "/markets/items/%s"
-	SearchItem       = "/markets/items"
+	SearchMarketItem = "/markets/items"
 )
-
-type MarketResponse interface {
-	model.MarketOption | []model.MarketItemStats | model.MarketList
-}
-
-func SendRequest[T MarketResponse](o *OpenAPI, method string, urlPath string, input interface{}, output *T) error {
-	header := map[string]string{}
-	header["accept"] = "application/json"
-	header["authorization"] = "bearer " + o.AccessKey
-
-	if input != nil && strings.EqualFold(method, http.MethodPost) {
-		header["Content-Type"] = "application/json"
-	}
-
-	resp, err := o.SendRequest(method, urlPath, header, input)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal([]byte(resp), output)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
 
 func (o *OpenAPI) GetMarketOptions() (model.MarketOption, error) {
 	var resp model.MarketOption
@@ -77,7 +49,7 @@ func (o *OpenAPI) SearchItem(sortType model.SortType,
 		SortCondition:  string(cond),
 	}
 
-	err := SendRequest(o, http.MethodPost, SearchItem, req, &resp)
+	err := SendRequest(o, http.MethodPost, SearchMarketItem, req, &resp)
 
 	return resp, err
 }
