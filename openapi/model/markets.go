@@ -1,5 +1,22 @@
 package model
 
+type SortType string
+type CategoryCode int
+type CharacterClass string
+type SortCondition string
+
+const (
+	GRADE             SortType = "GRADE"
+	YDAY_AVG_PRICE    SortType = "YDAY_AVG_PRICE"
+	RECENT_PRICE      SortType = "RECENT_PRICE"
+	CURRENT_MIN_PRICE SortType = "CURRENT_MIN_PRICE"
+)
+
+const (
+	ASC  SortCondition = "ASC"
+	DESC SortCondition = "DESC"
+)
+
 type MarketOption struct {
 	Categories []Category `json:"Categories"`
 	ItemGrades []string   `json:"ItemGrades"`
@@ -19,19 +36,17 @@ type Category struct {
 //	CodeName string `json:"CodeName"`
 //}
 
-type MarketItemStatsResponse []MarketItemStats
-
 type MarketItemStats struct {
 	Name             string            `json:"Name"`
-	TradeRemainCount int               `json:"TradeRemainCount"`
+	TradeRemainCount int               `json:"TradeRemainCount,omitempty"`
 	BundleCount      int               `json:"BundleCount"`
 	Stats            []MarketStatsInfo `json:"Stats"`
 }
 
 type MarketStatsInfo struct {
-	Date       string `json:"Date"`
-	AvgPrice   int    `json:"AvgPrice"`
-	TradeCount int    `json:"TradeCount"`
+	Date       string  `json:"Date"`
+	AvgPrice   float64 `json:"AvgPrice"`
+	TradeCount int     `json:"TradeCount"`
 }
 
 type RequestMarketItems struct {

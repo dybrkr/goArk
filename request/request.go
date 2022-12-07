@@ -22,7 +22,7 @@ func CreateAPI(endPoint string) *RestAPI {
 	}
 }
 
-func (r *RestAPI) SendAuthRequest(method string, subUrl string, headers map[string]string, data interface{}) (string, error) {
+func (r *RestAPI) SendRequest(method string, subUrl string, headers map[string]string, data interface{}) (string, error) {
 	var body io.Reader
 
 	body = nil

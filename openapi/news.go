@@ -13,7 +13,7 @@ func (o *OpenAPI) GetEvents() ([]model.Event, error) {
 
 	events := []model.Event{}
 
-	resp, err := o.SendAuthRequest(http.MethodGet, "/news/events", header, nil)
+	resp, err := o.SendRequest(http.MethodGet, "/news/events", header, nil)
 	if err != nil {
 		return nil, err
 	}

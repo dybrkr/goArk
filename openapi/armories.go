@@ -32,7 +32,7 @@ func SendArmoriesRequest[T ArmoriesResponse](o *OpenAPI, urlPath string, name st
 	header["authorization"] = "bearer " + o.AccessKey
 
 	subUrl := fmt.Sprintf(urlPath, url.QueryEscape(name))
-	resp, err := o.SendAuthRequest(http.MethodGet, subUrl, header, nil)
+	resp, err := o.SendRequest(http.MethodGet, subUrl, header, nil)
 	if err != nil {
 		return err
 	}

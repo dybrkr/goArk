@@ -16,7 +16,7 @@ func (o *OpenAPI) GetCharacters(name string) ([]model.CharacterInfo, error) {
 	c := []model.CharacterInfo{}
 
 	subUrl := fmt.Sprintf("/characters/%s/siblings", url.QueryEscape(name))
-	resp, err := o.SendAuthRequest(http.MethodGet, subUrl, header, nil)
+	resp, err := o.SendRequest(http.MethodGet, subUrl, header, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -25,7 +25,7 @@ func SendGuildRequest[T GuildResponse](o *OpenAPI, urlPath string, input interfa
 		// 인풋 있으면 처리해야하지만 일단 없고
 	}
 
-	resp, err := o.SendAuthRequest(http.MethodGet, urlPath, header, nil)
+	resp, err := o.SendRequest(http.MethodGet, urlPath, header, nil)
 	if err != nil {
 		return err
 	}
