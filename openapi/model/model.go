@@ -49,7 +49,6 @@ type Tendency struct {
 	MaxPoint int    `json:"MaxPoint"`
 }
 
-type ArmoryEquipments []ArmoryEquipment
 type ArmoryEquipment struct {
 	Type    string `json:"Type"`
 	Name    string `json:"Name"`
@@ -67,7 +66,7 @@ type ArmoryAvatar struct {
 	IsInner bool   `json:"IsInner"`
 	Tooltip string `json:"Tooltip"`
 }
-type ArmorySkills []ArmorySkill
+
 type ArmorySkill struct {
 	Name        string        `json:"Name"`
 	Icon        string        `json:"Icon"`
@@ -211,4 +210,18 @@ type AggregationElimination struct {
 	KillCount       int `json:"KillCount"`
 	AceCount        int `json:"AceCount"`
 	DeathCount      int `json:"DeathCount"`
+}
+
+type Collectible struct {
+	Type              string             `json:"Type"`
+	Icon              string             `json:"Icon"`
+	Point             int                `json:"Point"`
+	MaxPoint          int                `json:"MaxPoint"`
+	CollectiblePoints []CollectiblePoint `json:"CollectiblePoints"`
+}
+
+type CollectiblePoint struct {
+	PointName string `json:"PointName"`
+	Point     int    `json:"Point"`
+	MaxPoint  int    `json:"MaxPoint"`
 }

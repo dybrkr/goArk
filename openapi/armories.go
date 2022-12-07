@@ -9,70 +9,92 @@ import (
 )
 
 const (
-	GetProfilesFMT  = "/armories/characters/%s/profiles"
-	GetEquipmentFMT = "/armories/characters/%s/equipment"
-	GetAvatarFMT    = "/armories/characters/%s/avatars"
+	GetProfilesFMT     = "/armories/characters/%s/profiles"
+	GetEquipmentFMT    = "/armories/characters/%s/equipment"
+	GetAvatarFMT       = "/armories/characters/%s/avatars"
+	GetCombatSkillFMT  = "/armories/characters/%s/combat-skills"
+	GetEngravingsFMT   = "/armories/characters/%s/engravings"
+	GetCardFMT         = "/armories/characters/%s/cards"
+	GetGemsFMT         = "/armories/characters/%s/gems"
+	GetColosseumsFMT   = "/armories/characters/%s/colosseums"
+	GetCollectiblesFMT = "/armories/characters/%s/collectibles"
 )
 
-func (o *OpenAPI) GetProfiles(name string) (model.ArmoryProfile, error) {
-	header := map[string]string{}
-	header["accept"] = "application/json"
-	header["authorization"] = "bearer " + o.AccessKey
-
-	p := model.ArmoryProfile{}
-
-	subUrl := fmt.Sprintf(GetProfilesFMT, url.QueryEscape(name))
-	resp, err := o.SendAuthRequest(http.MethodGet, subUrl, header, nil)
-	if err != nil {
-		return p, err
-	}
-
-	err = json.Unmarshal([]byte(resp), &p)
-	if err != nil {
-		return p, err
-	}
-
-	return p, nil
+type ArmoriesResponse interface {
+	model.ArmoryProfile | []model.ArmoryEquipment | model.ArmoryAvatars |
+		[]model.ArmorySkill | model.ArmoryEngraving | model.ArmoryCard |
+		model.ArmoryGem | model.ColosseumInfo | []model.Collectible
 }
 
-func (o *OpenAPI) GetEquipment(name string) (model.ArmoryEquipments, error) {
+func SendRequest[T ArmoriesResponse](o *OpenAPI, urlPath string, name string, out *T) error {
 	header := map[string]string{}
 	header["accept"] = "application/json"
 	header["authorization"] = "bearer " + o.AccessKey
 
-	p := []model.ArmoryEquipment{}
-
-	subUrl := fmt.Sprintf(GetEquipmentFMT, url.QueryEscape(name))
+	subUrl := fmt.Sprintf(urlPath, url.QueryEscape(name))
 	resp, err := o.SendAuthRequest(http.MethodGet, subUrl, header, nil)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	err = json.Unmarshal([]byte(resp), &p)
+	err = json.Unmarshal([]byte(resp), out)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return p, nil
+	return nil
+}
+
+func (o *OpenAPI) GetProfiles(name string) (model.ArmoryProfile, error) {
+	var resp model.ArmoryProfile
+	err := SendRequest(o, GetProfilesFMT, name, &resp)
+	return resp, err
+}
+
+func (o *OpenAPI) GetEquipment(name string) ([]model.ArmoryEquipment, error) {
+	var resp []model.ArmoryEquipment
+	err := SendRequest(o, GetEquipmentFMT, name, &resp)
+	return resp, err
 }
 
 func (o *OpenAPI) GetAvatars(name string) (model.ArmoryAvatars, error) {
-	header := map[string]string{}
-	header["accept"] = "application/json"
-	header["authorization"] = "bearer " + o.AccessKey
+	var resp model.ArmoryAvatars
+	err := SendRequest(o, GetAvatarFMT, name, &resp)
+	return resp, err
+}
 
-	p := []model.ArmoryAvatar{}
+func (o *OpenAPI) GetCombatSkills(name string) ([]model.ArmorySkill, error) {
+	var resp []model.ArmorySkill
+	err := SendRequest(o, GetCombatSkillFMT, name, &resp)
+	return resp, err
+}
 
-	subUrl := fmt.Sprintf(GetAvatarFMT, url.QueryEscape(name))
-	resp, err := o.SendAuthRequest(http.MethodGet, subUrl, header, nil)
-	if err != nil {
-		return nil, err
-	}
+func (o *OpenAPI) GetEngravings(name string) (model.ArmoryEngraving, error) {
+	var resp model.ArmoryEngraving
+	err := SendRequest(o, GetEngravingsFMT, name, &resp)
+	return resp, err
+}
 
-	err = json.Unmarshal([]byte(resp), &p)
-	if err != nil {
-		return nil, err
-	}
+func (o *OpenAPI) GetCards(name string) (model.ArmoryCard, error) {
+	var resp model.ArmoryCard
+	err := SendRequest(o, GetCardFMT, name, &resp)
+	return resp, err
+}
 
-	return p, nil
+func (o *OpenAPI) GetGems(name string) (model.ArmoryGem, error) {
+	var resp model.ArmoryGem
+	err := SendRequest(o, GetGemsFMT, name, &resp)
+	return resp, err
+}
+
+func (o *OpenAPI) GetColosseums(name string) (model.ColosseumInfo, error) {
+	var resp model.ColosseumInfo
+	err := SendRequest(o, GetColosseumsFMT, name, &resp)
+	return resp, err
+}
+
+func (o *OpenAPI) GetCollectibles(name string) ([]model.Collectible, error) {
+	var resp []model.Collectible
+	err := SendRequest(o, GetCollectiblesFMT, name, &resp)
+	return resp, err
 }

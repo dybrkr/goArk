@@ -15,15 +15,10 @@ func main() {
 	fmt.Printf("user => %v\n", userinfo)
 	api := openapi.CreateAPI(EndPoint, userinfo.AccessKey)
 
-	resp, err := api.GetEvents()
+	resp, err := api.GetEquipment("aa")
 	if err != nil {
 		return
 	}
 	fmt.Printf("resp => %v\n", resp)
 
-	cresp, err := api.GetCharacters("ABC")
-	if err != nil {
-		return
-	}
-	fmt.Printf("resp => %v\n", cresp)
 }
