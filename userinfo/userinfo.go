@@ -1,3 +1,8 @@
+/*
+Key 정보를 따로 저장하기 위한 임시 패키지
+
+같은 디렉토리에 userinfo.json 에 저장된 Key를 가져와서 사용
+*/
 package userinfo
 
 import (

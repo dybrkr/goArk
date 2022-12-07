@@ -20,4 +20,10 @@ func main() {
 		return
 	}
 	fmt.Printf("resp => %v\n", resp)
+
+	cresp, err := api.GetCharacters("ABC")
+	if err != nil {
+		return
+	}
+	fmt.Printf("resp => %v\n", cresp)
 }
