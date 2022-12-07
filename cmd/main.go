@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/dybrkr/goArk/request"
+	"github.com/dybrkr/goArk/openapi"
 	"github.com/dybrkr/goArk/userinfo"
-	"net/http"
 )
 
 const (
@@ -14,13 +13,9 @@ const (
 func main() {
 	userinfo := userinfo.GetUserInfo()
 	fmt.Printf("user => %v\n", userinfo)
-	api := request.CreateAPI(EndPoint)
+	api := openapi.CreateAPI(EndPoint, userinfo.AccessKey)
 
-	header := map[string]string{}
-	header["accept"] = "application/json"
-	header["authorization"] = "bearer " + userinfo.AccessKey
-
-	resp, err := api.SendAuthRequest(http.MethodGet, "/news/events", header, nil)
+	resp, err := api.GetEvents()
 	if err != nil {
 		return
 	}
