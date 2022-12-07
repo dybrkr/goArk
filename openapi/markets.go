@@ -27,28 +27,9 @@ func (o *OpenAPI) GetItemStat(itemID string) ([]model.MarketItemStats, error) {
 	return resp, err
 }
 
-func (o *OpenAPI) SearchItem(sortType model.SortType,
-	code model.CategoryCode,
-	class model.CharacterClass,
-	itemTier int,
-	itemGrade string,
-	itemName string,
-	pageNo int,
-	cond model.SortCondition) (model.MarketList, error) {
+func (o *OpenAPI) SearchItem(req model.RequestMarketItems) (model.MarketList, error) {
 
 	var resp model.MarketList
-
-	req := model.RequestMarketItems{
-		Sort:           string(sortType),
-		CategoryCode:   int(code),
-		CharacterClass: string(class),
-		ItemTier:       itemTier,
-		ItemGrade:      itemGrade,
-		ItemName:       itemName,
-		PageNo:         pageNo,
-		SortCondition:  string(cond),
-	}
-
 	err := SendRequest(o, http.MethodPost, SearchMarketItem, req, &resp)
 
 	return resp, err

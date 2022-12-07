@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/dybrkr/goArk/openapi"
-	"github.com/dybrkr/goArk/openapi/model"
 	"github.com/dybrkr/goArk/userinfo"
 )
 
@@ -16,9 +15,10 @@ func main() {
 	fmt.Printf("user => %v\n", userinfo)
 	api := openapi.CreateAPI(EndPoint, userinfo.AccessKey)
 
-	resp, err := api.SearchItem(model.GRADE, 0, "", 0, "", "", 0, model.ASC)
+	resp, err := api.GetItemStat("6882601")
 	if err != nil {
 		return
 	}
 	fmt.Printf("resp => %v\n", resp)
+
 }
